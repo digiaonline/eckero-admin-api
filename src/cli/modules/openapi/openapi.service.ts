@@ -28,6 +28,6 @@ export class OpenApiService {
 
       const document = SwaggerModule.createDocument(app, options);
       
-      writeFileSync('swagger.json', JSON.stringify(document, null, 2));
+      writeFileSync('./docs/eckero-admin-api.swagger.json', JSON.stringify(document, null, 2));
     }
 }
