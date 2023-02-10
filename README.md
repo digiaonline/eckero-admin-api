@@ -34,7 +34,6 @@ The project can be developed on any environment supporting [Docker](https://www.
 
 ### Run
 
-- `docker-compose -f docker-compose.yml up -d` to start needed backend services (db, cache)
 - `yarn dev` to start the development server
 - api available at [http://localhost:8080](http://localhost:8080)
 

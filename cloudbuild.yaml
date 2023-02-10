@@ -1,0 +1,40 @@
+steps:
+  - name: node:18
+    entrypoint: yarn
+    args: ["install"]
+
+  - name: node:18
+    entrypoint: yarn
+    args: ["lint"]
+
+  - name: node:18
+    entrypoint: yarn
+    args: ["test"]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build", "--build-arg", "app_env=${_APP_ENV}", "--build-arg", "build_number=$SHORT_SHA",
+        "-t", "eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA",
+        ".",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA"]
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      [
+        'run', 'deploy', '$REPO_NAME-${_APP_ENV}',
+        '--image', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA',
+        '--region', '${_GCLOUD_REGION}',
+        '--platform', 'managed',
+        '--vpc-connector', 'projects/$PROJECT_ID/locations/${_GCLOUD_REGION}/connectors/vpc-connector-${_APP_ENV}'
+      ]
+
+images:
+  - eu.gcr.io/$PROJECT_ID/$REPO_NAME
+
+substitutions:
+  _APP_ENV: dev
+  _GCLOUD_REGION: europe-north1

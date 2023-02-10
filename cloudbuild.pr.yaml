@@ -1,0 +1,27 @@
+steps:
+  - name: node:18
+    entrypoint: yarn
+    args: ["install"]
+
+  - name: node:18
+    entrypoint: yarn
+    args: ["lint"]
+
+  - name: node:18
+    entrypoint: yarn
+    args: ["test"]
+
+  - name: node:14
+    entrypoint: yarn
+    args: ["test:e2e"]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build", "--build-arg", "app_env=${_APP_ENV}", "--build-arg", "build_number=$SHORT_SHA",
+        ".",
+      ]
+
+substitutions:
+  _APP_ENV: dev
+  _GCLOUD_REGION: europe-north1
