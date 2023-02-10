@@ -18,7 +18,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "cli": "ts-node -r tsconfig-paths/register src/cli.ts",
+    "swagger": "yarn cli openapi generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.8",
@@ -31,6 +33,7 @@
     "cli-color": "^2.0.3",
     "helmet": "^6.0.1",
     "nestjs-cls": "^3.0.5",
+    "nestjs-console": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "traverse": "^0.6.7"
