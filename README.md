@@ -8,7 +8,7 @@ Runs on Google Cloud's fully managed compute platform [Google Cloud Run](https:/
 
 ## Documentation
 
-The RESTful API is documented using the OAS 3.0 specification and can be found in this repository under `./swagger.json`.
+The RESTful API is documented using the OAS 3.0 specification and can be found in this repository under `./docs/eckero-admin-api.swagger.json`.
 
 [Swagger UI](https://swagger.io/tools/swagger-ui/) can be used to visualize the specification in a web environment.
 
