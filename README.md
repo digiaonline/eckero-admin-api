@@ -1,73 +1,60 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# eckero-admin-api
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Eckerö Line Admin API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project consists of a RESTful API that can be used to clear the Redis cache from Google Cloud Console.
 
-## Description
+Runs on Google Cloud's fully managed compute platform [Google Cloud Run](https://cloud.google.com/run).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Documentation
 
-## Installation
+The RESTful API is documented using the OAS 3.0 specification and can be found in this repository under `./swagger.json`.
 
-```bash
-$ yarn install
-```
+[Swagger UI](https://swagger.io/tools/swagger-ui/) can be used to visualize the specification in a web environment.
 
-## Running the app
+## Architecture
 
-```bash
-# development
-$ yarn run start
+![architecture diagram](docs/eckero-admin-api.svg)
 
-# watch mode
-$ yarn run start:dev
+## Development
 
-# production mode
-$ yarn run start:prod
-```
+The project can be developed on any environment supporting [Docker](https://www.docker.com/), [NodeJS](https://nodejs.org/) and the [Google Cloud SDK](https://cloud.google.com/sdk/gcloud).
 
-## Test
+### Prerequisites
 
-```bash
-# unit tests
-$ yarn run test
+- NodeJs v18 (latest Maintenance LTS)
+- Yarn `npm -g install yarn`
+- [Google Cloud SDK](https://cloud.google.com/sdk/gcloud)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-# e2e tests
-$ yarn run test:e2e
+### Install
 
-# test coverage
-$ yarn run test:cov
-```
+- `yarn` to install project dependencies
+- `cp .env.test .env` and replace environment variables
 
-## Support
+### Run
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- `docker-compose -f docker-compose.yml up -d` to start needed backend services (db, cache)
+- `yarn dev` to start the development server
+- api available at [http://localhost:8080](http://localhost:8080)
 
-## Stay in touch
+## Environments & Infrastructure
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+All environments run on Google Cloud and are provisioned and configured using [Terraform](https://www.terraform.io/).
+Additional information about the infrastructure can be found in the [README](terraform/README.md).
 
-## License
+The following envionments have been created and configured on Google Cloud:
 
-Nest is [MIT licensed](LICENSE).
+- [staging](https://eckero-mobile-api-staging-ds55qghzsq-lz.a.run.app/) - A testing environment for new features during development and before deployment to production. This environment can be in a broken state at any time and you should not rely on it being constantly available.
+- [production](https://eckero-mobile-api-production-bbcuzcufra-lz.a.run.app/) - Production environment for the mobile app. 99.99% availability running only stable code. This environment is monitored for performance issues and error scenarios which are automatically reported to the development team to take action on.
+
+## Deployment
+
+Deployment of the API to [Google Cloud Run](https://cloud.google.com/run) is fully automated using [Google Cloud Build](https://cloud.google.com/cloud-build). The Cloud Build configuration file can be found in this repository under `./cloudbuild.yaml`.
+
+Github branches `develop` and `master` are configured to be automatically built and deployed on every push to the repository:
+
+- `develop` is deployed to the `staging` environment
+- `master` is deployed to the `production` environment
+
+The Cloud Build triggers are configured using [Terraform](https://www.terraform.io/) under `./terrafom/` in in this repository
