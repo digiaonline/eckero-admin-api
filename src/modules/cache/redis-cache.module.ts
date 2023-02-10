@@ -2,7 +2,7 @@ import {CacheModule, CacheStore, Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import {RedisCacheController} from '@modules/cache/redis-cache.controller';
 import {RedisCacheService} from '@modules/cache/redis-cache.service';
-import * as redisStore from 'cache-manager-redis-store';
+import {redisStore} from 'cache-manager-redis-store';
 import {TimerModule} from '@root/src/utils/timer/timer.module';
 import {LoggerModule} from '@root/src/utils/logger/logger.module';
 
