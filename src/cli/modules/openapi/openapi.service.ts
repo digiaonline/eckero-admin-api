@@ -22,7 +22,7 @@ export class OpenApiService {
 
       const options = new DocumentBuilder()
         .setTitle('Eckerö Line Admin API')
-        .setDescription('Non-public server for clearing the cache from Google Cloud Console')
+        .setDescription('Eckerö Line Admin API')
         .setVersion('2.1.0')
         .build();
 
