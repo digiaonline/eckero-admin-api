@@ -13,7 +13,7 @@ export class RedisCacheController {
 
     @Post('clear')
     @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'Cache cleared', type: Promise<void>})
+    @ApiResponse({status: HttpStatus.NO_CONTENT, description: 'Cache cleared'})
     clearCache(): Promise<void> {
         return this.redisCacheService.clearCache(); 
     }
