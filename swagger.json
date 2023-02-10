@@ -1,0 +1,30 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/cache/clear": {
+      "post": {
+        "operationId": "RedisCacheController_clearCache",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Cache cleared"
+          }
+        },
+        "tags": [
+          "Cache"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Eckerö Line Admin API",
+    "description": "Eckerö Line Admin API",
+    "version": "2.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {}
+  }
+}
