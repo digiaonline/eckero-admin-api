@@ -5,7 +5,7 @@
   "author": "Digia Plc",
   "private": true,
   "engines": {
-    "node": "19"
+    "node": "18"
   },
   "scripts": {
     "build": "nest build",
@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "cli": "ts-node -r tsconfig-paths/register src/cli.ts",
-    "swagger": "yarn cli openapi generate"
+    "generate:swagger": "yarn cli openapi generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.8",
