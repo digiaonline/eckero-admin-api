@@ -86,7 +86,7 @@ resource "google_cloud_run_service" "admin_api" {
 
   metadata {
     annotations = {
-      "run.googleapis.com/ingress" = "internal"
+      "run.googleapis.com/ingress" = "all"
     }
   }
 }
