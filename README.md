@@ -2,7 +2,7 @@
 
 Eckerö Line Admin API
 
-This project consists of a RESTful API that can be used to clear the Redis cache from Google Cloud Console.
+This project consists of a RESTful API that can be used to clear the Redis cache.
 
 Runs on Google Cloud's fully managed compute platform [Google Cloud Run](https://cloud.google.com/run).
 
@@ -42,7 +42,10 @@ The project can be developed on any environment supporting [Docker](https://www.
 All environments run on Google Cloud and are provisioned and configured using [Terraform](https://www.terraform.io/).
 Additional information about the infrastructure can be found in the [README](terraform/README.md).
 
-Eckerö Admin API is a private API and can only be accessed via Google Cloud Console.
+The following envionments have been created and configured on Google Cloud:
+
+- [staging](https://eckero-admin-api-staging-ds55qghzsq-lz.a.run.app/) - A testing environment for new features during development and before deployment to production. This environment can be in a broken state at any time and you should not rely on it being constantly available.
+- [production] - TODO
 
 ## Deployment
 
@@ -54,3 +57,12 @@ Github branches `develop` and `master` are configured to be automatically built 
 - `master` is deployed to the `production` environment
 
 The Cloud Build triggers are configured using [Terraform](https://www.terraform.io/) under `./terrafom/` in in this repository
+
+## Clearing the Redis cache
+
+Make sure you are authenticated to Google Cloud via `gcloud auth login`.
+
+Redis cache can be cleared via authorized POST request in terminal or Google Cloud Console (staging example):
+`$ curl -X POST  -H "Authorization: Bearer $(gcloud auth print-identity-token)" https://eckero-admin-api-staging-ds55qghzsq-lz.a.run.app/v1/cache/clear`
+
+If the request doesn't return anything, the cache has been cleared successfully.
