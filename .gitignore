@@ -1,7 +1,15 @@
+# Google
+keyfile.json
+service_account.json
+service_account_*.json
+
 # compiled output
 /dist
 /node_modules
 .env
+
+# devops
+.terraform
 
 # Logs
 logs
@@ -29,7 +37,7 @@ lerna-debug.log*
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

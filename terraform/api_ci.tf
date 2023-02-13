@@ -23,7 +23,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     owner = var.github_owner
     name  = var.github_repository
     push {
-      branch = var.branch_name
+      branch = "^${var.branch_name}$"
     }
   }
 
@@ -45,7 +45,7 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger_pull_request" {
     owner = var.github_owner
     name  = var.github_repository
     pull_request {
-      branch          = var.branch_name
+      branch          = "^${var.branch_name}$"
       comment_control = "COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY"
     }
   }

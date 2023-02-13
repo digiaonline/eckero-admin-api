@@ -23,36 +23,36 @@ variable "ram" {
   description = "The docker container RAM limit"
 }
 
-resource "google_service_account" "api_service_account" {
-  account_id   = "${var.service}-${var.environment}"
+resource "google_service_account" "admin_api_service_account" {
+  account_id   = "el-admin-api-${var.environment}"
   display_name = "${var.service}-${var.environment}"
 }
 
-resource "google_project_iam_member" "api_iam_cloud_run_viewer" {
-  project = var.project
-  role    = "roles/run.viewer"
-  member  = "serviceAccount:${google_service_account.api_service_account.email}"
-}
-
-resource "google_project_iam_member" "api_iam_cloud_run_invoker" {
+resource "google_project_iam_member" "admin_api_iam_cloud_run_invoker" {
   project = var.project
   role    = "roles/run.invoker"
-  member  = "serviceAccount:${google_service_account.api_service_account.email}"
+  member  = "serviceAccount:${google_service_account.admin_api_service_account.email}"
 }
 
-resource "google_project_iam_member" "api_iam_secretmanager_secret_accessor" {
+resource "google_project_iam_member" "admin_api_iam_service_account_user" {
+  project = var.project
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.admin_api_service_account.email}"
+}
+
+resource "google_project_iam_member" "admin_api_iam_secretmanager_secret_accessor" {
   project = var.project
   role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:${google_service_account.api_service_account.email}"
+  member  = "serviceAccount:${google_service_account.admin_api_service_account.email}"
 }
 
-resource "google_project_iam_member" "api_iam_datastore_user" {
+resource "google_project_iam_member" "admin_api_iam_datastore_user" {
   project = var.project
   role    = "roles/datastore.user"
-  member  = "serviceAccount:${google_service_account.api_service_account.email}"
+  member  = "serviceAccount:${google_service_account.admin_api_service_account.email}"
 }
 
-resource "google_cloud_run_service" "api" {
+resource "google_cloud_run_service" "admin_api" {
   name     = "${var.service}-${var.environment}"
   location = var.gcloud_region
 
@@ -67,7 +67,7 @@ resource "google_cloud_run_service" "api" {
           }
         }
       }
-      service_account_name = google_service_account.api_service_account.email
+      service_account_name = google_service_account.admin_api_service_account.email
     }
   }
 
@@ -79,22 +79,6 @@ resource "google_cloud_run_service" "api" {
   }
 }
 
-data "google_iam_policy" "noauth" {
-  binding {
-    role = "roles/run.invoker"
-    members = [
-      "allUsers",
-    ]
-  }
-}
-
-resource "google_cloud_run_service_iam_policy" "noauth" {
-  location    = google_cloud_run_service.api.location
-  project     = google_cloud_run_service.api.project
-  service     = google_cloud_run_service.api.name
-  policy_data = data.google_iam_policy.noauth.policy_data
-}
-
-output "api_url" {
-  value = google_cloud_run_service.api.status[0].url
+output "admin_api_url" {
+  value = google_cloud_run_service.admin_api.status[0].url
 }

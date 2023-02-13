@@ -42,10 +42,7 @@ The project can be developed on any environment supporting [Docker](https://www.
 All environments run on Google Cloud and are provisioned and configured using [Terraform](https://www.terraform.io/).
 Additional information about the infrastructure can be found in the [README](terraform/README.md).
 
-The following envionments have been created and configured on Google Cloud:
-
-- [staging](https://eckero-mobile-api-staging-ds55qghzsq-lz.a.run.app/) - A testing environment for new features during development and before deployment to production. This environment can be in a broken state at any time and you should not rely on it being constantly available.
-- [production](https://eckero-mobile-api-production-bbcuzcufra-lz.a.run.app/) - Production environment for the mobile app. 99.99% availability running only stable code. This environment is monitored for performance issues and error scenarios which are automatically reported to the development team to take action on.
+Eckerö Admin API is a private API and can only be accessed via Google Cloud Console.
 
 ## Deployment
 

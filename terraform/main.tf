@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.12"
+  required_version = "~> 1.3.8"
 
   backend "gcs" {
     prefix      = "eckero-admin-api"
@@ -7,14 +7,12 @@ terraform {
 }
 
 provider "google" {
-  version     = "~> 3.16"
   credentials = "service_account_${var.environment}.json"
   project     = var.project
   region      = var.gcloud_region
 }
 
 provider "google-beta" {
-  version     = "~> 3.16"
   credentials = "service_account_${var.environment}.json"
   project     = var.project
   region      = var.gcloud_region
