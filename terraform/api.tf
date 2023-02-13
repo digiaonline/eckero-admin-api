@@ -57,6 +57,12 @@ resource "google_cloud_run_service" "admin_api" {
   location = var.gcloud_region
 
   template {
+    metadata {
+      annotations = {
+        "autoscaling.knative.dev/maxScale" = "1"
+        "run.googleapis.com/vpc-access-connector" = "vpc-connector-${var.environment}"
+      }
+    }
     spec {
       containers {
         image = "${var.image}:${var.tag}"
@@ -76,6 +82,12 @@ resource "google_cloud_run_service" "admin_api" {
   traffic {
     percent         = 100
     latest_revision = true
+  }
+
+  metadata {
+    annotations = {
+      "run.googleapis.com/ingress" = "internal"
+    }
   }
 }
 
