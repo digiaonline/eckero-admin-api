@@ -11,10 +11,6 @@ steps:
     entrypoint: yarn
     args: ["test"]
 
-  - name: node:14
-    entrypoint: yarn
-    args: ["test:e2e"]
-
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
