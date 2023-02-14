@@ -60,6 +60,8 @@ The Cloud Build triggers are configured using [Terraform](https://www.terraform.
 
 ## Clearing the Redis cache
 
+Google Cloud Scheduler is scheduled to clear the cache everyday at midnight. Redis cache can also be cleared manually:
+
 Make sure you are authenticated to Google Cloud via `gcloud auth login`.
 
 Redis cache can be cleared via Google Cloud CLI (replace `env` with `staging`or `production`):
