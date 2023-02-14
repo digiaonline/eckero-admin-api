@@ -62,7 +62,8 @@ The Cloud Build triggers are configured using [Terraform](https://www.terraform.
 
 Make sure you are authenticated to Google Cloud via `gcloud auth login`.
 
-Redis cache can be cleared via authorized POST request in terminal or Google Cloud Console (staging example):
-`$ curl -X POST  -H "Authorization: Bearer $(gcloud auth print-identity-token)" https://eckero-admin-api-staging-ds55qghzsq-lz.a.run.app/v1/cache/clear`
+Redis cache can be cleared via Google Cloud CLI (replace `env` with `staging`or `production`):
 
-If the request doesn't return anything, the cache has been cleared successfully.
+```[bash]
+gcloud scheduler jobs run eckero-admin-api-scheduler-clear-cache-{env} --location europe-west3
+```
