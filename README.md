@@ -70,4 +70,4 @@ Redis cache can be cleared via Google Cloud CLI (replace `env` with `staging`or 
 gcloud scheduler jobs run eckero-admin-api-scheduler-clear-cache-{env} --location europe-west3
 ```
 
-Alternatively, you can trigger the Cloud Scheduler from Google Cloud - Cloud Scheduler - `eckero-admin-api-scheduler-clear-cache-staging` by clicking Actions - Run now.
+Alternatively, you can trigger the Cloud Scheduler from Google Cloud - Cloud Scheduler - `eckero-admin-api-scheduler-clear-cache-{env}` by clicking Actions - Run now.
